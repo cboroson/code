@@ -34,10 +34,11 @@ jobs:
         shell: pwsh
         run: |
             $envVars = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
-            foreach ($Line in $envVars) {
-              # New-Item -Path Env:($Line.Name) -Value $Line.Value
-              echo "::set-output name=$Line.Name::$Line.Value"
-            }
+            $envVars
+#            foreach ($Line in $envVars) {
+#              # New-Item -Path Env:($Line.Name) -Value $Line.Value
+#              echo "::set-output name=$Line.Name::$Line.Value"
+#            }
 
   build:
     needs: ReadConfig
