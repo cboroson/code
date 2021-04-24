@@ -42,5 +42,5 @@ jobs:
         run: ls -la "$GITHUB_WORKSPACE/configuration"
         
       - name: cat file
-        run: cat "$GITHUB_WORKSPACE/configuration/$INPUTS_CUSTOMER_SHORT_NAME.json"
+        run: cat "$GITHUB_WORKSPACE/configuration/${{ github.event.inputs.customer_short_name }}.json"
 
