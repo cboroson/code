@@ -33,7 +33,11 @@ jobs:
         id: set-matrix
         shell: pwsh
         run: |
-            cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
+            $envVars = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
+            foreach ($Line in $envVars) {
+              # New-Item -Path Env:($Line.Name) -Value $Line.Value
+              echo "::set-output name=$($Line.Name)::$($Line.Value)"
+            }
 
   build:
     needs: ReadConfig
