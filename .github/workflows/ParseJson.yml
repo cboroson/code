@@ -1,0 +1,46 @@
+name: Parse Json File
+
+# Controls when the action will run. 
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    # Required inputs
+    inputs:
+      customer_short_name:  # id of input
+        description: 'Customer short name'
+        required: true
+        
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  ReadConfig:
+    name: ReadConfig
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      # Checks-out a separate repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          repository: cboroson/configuration
+          path: 'configuration'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Parse Json
+          uses: azure/powershell@v1
+          with:
+            inlineScript: |
+              $vars = $(cat "$GITHUB_WORKSPACE/configuration/${{ github.event.inputs.customer_short_name }}.json") | convertFrom-json
+              $vars
+           
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+
+  build:
+    needs: ReadConfig
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    steps:
+    - run: echo ${{fromJson(needs.ReadConfig.outputs.matrix)}}
