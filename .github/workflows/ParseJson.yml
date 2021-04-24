@@ -30,11 +30,12 @@ jobs:
         shell: pwsh
         run: |
             $config = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
-            # $envVars | format-list
+            $config | format-list
 
       - name: Display results
         shell: pwsh
         run: |
+            $config.count
             foreach ($var in $config) {
-              write-Host "The value for $($var.name) is $($var.value)"
+              write-output "The value for $($var.name) is $($var.value)"
             }
