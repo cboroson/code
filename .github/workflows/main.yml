@@ -30,7 +30,7 @@ jobs:
           
       - name: Parse Json
         run: |
-          JSON=$(cat ./your.json)
+          JSON=$(cat "$GITHUB_WORKSPACE/configuration/${{ github.event.inputs.customer_short_name }}.json")
           echo "::set-output name=${JSON//'%'/'%25'}"
         
     outputs:
@@ -47,4 +47,4 @@ jobs:
     strategy:
       matrix: ${{fromJson(needs.ReadConfig.outputs.matrix)}}
     steps:
-    - run: build
+    - run: echo here
