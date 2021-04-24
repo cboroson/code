@@ -25,16 +25,18 @@ jobs:
           repository: cboroson/configuration
           path: 'configuration'
           token: ${{ secrets.GITHUB_TOKEN }}
-          
-      - uses: azure/powershell@v1
-        with:
-          azPSVersion: '3.1.0'
-          inlineScript: |
-            $vars = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
-            $vars
+ 
+      - run: which pwsh
+       
+#      - uses: azure/powershell@v1
+#        with:
+#          azPSVersion: '3.1.0'
+#          inlineScript: |
+#            $vars = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
+#            $vars
            
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+#    outputs:
+#      matrix: ${{ steps.set-matrix.outputs.matrix }}
 
 
   build:
