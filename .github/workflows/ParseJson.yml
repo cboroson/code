@@ -32,7 +32,8 @@ jobs:
             $config = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
             $config | format-list
             foreach ($Line in $config) {
-              New-Item -Path Env:"VOD_$($Line.Name)" -Value $($Line.Value)
+              $Line
+              New-Item -Path "Env:VOD_$($Line.Name)" -Value $Line.Value
             }
 
       - name: Display results
