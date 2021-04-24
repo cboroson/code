@@ -15,6 +15,9 @@ jobs:
   ReadConfig:
     name: ReadConfig
     runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -27,14 +30,10 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
  
       - name: Parse Json File
+        id: set-matrix
         shell: pwsh
         run: |
-            $vars = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
-            $vars
-           
-#    outputs:
-#      matrix: ${{ steps.set-matrix.outputs.matrix }}
-
+            cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
 
   build:
     needs: ReadConfig
