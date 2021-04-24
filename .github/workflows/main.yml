@@ -1,21 +1,21 @@
 # This is a basic workflow to help you get started with Actions
 
 name: Testing Multiple Repos
-
+# Required inputs
+inputs:
+  customer_short_name:  # id of input
+    description: 'Short text string that uniquely idendifies the customer.'
+    required: true
 # Controls when the action will run. 
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
-  push:
-    branches:
-      - cboroson-patch-1
-  pull_request:
-    branches:
-      - main
-
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
+    # Required inputs
+    inputs:
+      customer_short_name:  # id of input
+        description: 'Short text string that uniquely idendifies the customer.'
+        required: true
+        
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
