@@ -29,7 +29,7 @@ jobs:
       - name: Parse Json File
         shell: pwsh
         run: |
-            $config = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
+            $config = (cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json)
             foreach ($Line in $config) {
               write-output "Here"
               $Line
