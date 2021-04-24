@@ -29,6 +29,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Parse Json
+        id: set-matrix
         run: |
           JSON=$(cat "$GITHUB_WORKSPACE/configuration/${{ github.event.inputs.customer_short_name }}.json")
           echo "::set-output name=${JSON//'%'/'%25'}"
