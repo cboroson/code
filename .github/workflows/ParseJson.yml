@@ -30,10 +30,10 @@ jobs:
         shell: pwsh
         run: |
             $config = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
-            $config | format-list
             foreach ($Line in $config) {
+              write-output "Here"
               $Line
-              New-Item -Path "Env:VOD_$($Line.Name)" -Value $Line.Value
+              # New-Item -Path "Env:VOD_$($Line.Name)" -Value $Line.Value
             }
 
       - name: Display results
