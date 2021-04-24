@@ -12,12 +12,9 @@ on:
         
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  ReadConfig:
-    name: ReadConfig
+  Build:
+    name: Read and parse configuration
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
-      
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -30,20 +27,14 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
  
       - name: Parse Json File
-        id: set-matrix
         shell: pwsh
         run: |
-            $envVars = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
-            $envVars
-#            foreach ($Line in $envVars) {
-#              # New-Item -Path Env:($Line.Name) -Value $Line.Value
-#              echo "::set-output name=$Line.Name::$Line.Value"
-#            }
+            $config = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
+            # $envVars | format-list
 
-  build:
-    needs: ReadConfig
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
-
-    steps:
-    - run: echo ${{needs.ReadConfig.outputs.matrix}}
+      - name: Display results
+        shell: pwsh
+        run: |
+            foreach ($var in $config) {
+              write-Host "The value for $($var.name) is $($var.value)"
+            }
