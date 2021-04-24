@@ -37,9 +37,12 @@ jobs:
             }
 
       - name: Display results
-        shell: pwsh
-        run: |
-            $envVars = get-childItem $env: | where {$_.name -match '^VOD_.'}
-            foreach ($var in $envVars) {
-              write-output "The value for $($var.name) is $($var.value)"
-            }
+        run: set
+         
+#      - name: Display results
+#        shell: pwsh
+#        run: |
+#            $envVars = get-childItem $env: | where {$_.name -match '^VOD_.'}
+#            foreach ($var in $envVars) {
+#              write-output "The value for $($var.name) is $($var.value)"
+#            }
