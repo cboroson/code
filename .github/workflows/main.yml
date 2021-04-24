@@ -37,8 +37,6 @@ jobs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
 
 
-
-  # This workflow contains a single job called "build"
   build:
     needs: ReadConfig
     # The type of runner that the job will run on
