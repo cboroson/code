@@ -31,11 +31,14 @@ jobs:
         run: |
             $config = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
             $config | format-list
+            foreach ($Line in $config) {
+              New-Item -Path Env:"VOD_$($Line.Name)" -Value $($Line.Value)
+            }
 
       - name: Display results
         shell: pwsh
         run: |
-            $config.count
-            foreach ($var in $config) {
+            $envVars = get-childItem $env: | where {$_.name -match '^VOD_.'}
+            foreach ($var in $envVars) {
               write-output "The value for $($var.name) is $($var.value)"
             }
