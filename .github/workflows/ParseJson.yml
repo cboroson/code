@@ -30,7 +30,7 @@ jobs:
         with:
           azPSVersion: '3.1.0'
           inlineScript: |
-            $vars = $(cat "./configuration/${{ github.event.inputs.customer_short_name }}.json") | convertFrom-json
+            $vars = cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json
             $vars
            
     outputs:
