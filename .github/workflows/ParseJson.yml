@@ -26,12 +26,11 @@ jobs:
           path: 'configuration'
           token: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Parse Json
-          uses: azure/powershell@v1
-          with:
-            inlineScript: |
-              $vars = $(cat "$GITHUB_WORKSPACE/configuration/${{ github.event.inputs.customer_short_name }}.json") | convertFrom-json
-              $vars
+      - uses: azure/powershell@v1
+        with:
+          inlineScript: |
+            $vars = $(cat "$GITHUB_WORKSPACE/configuration/${{ github.event.inputs.customer_short_name }}.json") | convertFrom-json
+            $vars
            
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
