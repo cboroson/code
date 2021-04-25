@@ -28,14 +28,8 @@ jobs:
  
       - name: Parse Json File
         shell: pwsh
-        run: |
-            $config = (cat "./configuration/${{ github.event.inputs.customer_short_name }}.json" | convertFrom-json)
-            foreach ($Line in $config) {
-              write-output "Here"
-              $Line
-              # New-Item -Path "Env:VOD_$($Line.Name)" -Value $Line.Value
-            }
-
+        run: ./scripts/parseConfig.ps1 -configFile "./configuration/${{ github.event.inputs.customer_short_name }}.json"
+        
       - name: Display results
         run: set
          
