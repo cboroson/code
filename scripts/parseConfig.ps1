@@ -22,5 +22,5 @@ foreach ($Line in $config.PSObject.Properties) {
     New-Item -Path Env:$EnvVarName -Value $EnvVarValue #| out-null
   }
 
-  set
+  dir env:
 }
