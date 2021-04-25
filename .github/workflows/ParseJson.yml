@@ -36,5 +36,5 @@ jobs:
             Write-Output "We can now run terraform commands or other scripts using the configuration that is saved in"
             Write-Output "the evironment variables."
             Write-Output ""
-            Write-Output "For example:
+            Write-Output "For example:"
             Write-Output "terraform apply -var customer_short_name=$Env:VOD_customer_short_name"
