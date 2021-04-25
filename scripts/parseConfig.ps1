@@ -15,13 +15,13 @@ foreach ($Line in $config.PSObject.Properties) {
     # Update existing environment variable
     write-output "Setting existing environment variable $EnvVarName with a value of $EnvVarValue"
     #Set-Item -path Env:$EnvVarName -Value $EnvVarValue #| out-null
-    Write-output $EnvVarName=$EnvVarValue | out-file $ENV:GITHUB_ENV -append
+    Write-output "$EnvVarName=$EnvVarValue" | out-file $ENV:GITHUB_ENV -append
   }
   else {
     # Create new environment variable
     write-output "Adding new environment variable $EnvVarName with a value of $EnvVarValue"
     #New-Item -Path Env:$EnvVarName -Value $EnvVarValue #| out-null
-    Write-output $EnvVarName=$EnvVarValue | out-file $ENV:GITHUB_ENV -append
+    Write-output "$EnvVarName=$EnvVarValue" | out-file $ENV:GITHUB_ENV -append
 
   }
 
