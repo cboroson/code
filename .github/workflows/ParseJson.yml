@@ -29,14 +29,12 @@ jobs:
       - name: Parse Json File
         shell: pwsh
         run: ./scripts/parseConfig.ps1 -configFile "./configuration/${{ github.event.inputs.customer_short_name }}.json"
-        
-      - name: Display results
-        run: set
          
-#      - name: Display results
-#        shell: pwsh
-#        run: |
-#            $envVars = get-childItem $env: | where {$_.name -match '^VOD_.'}
-#            foreach ($var in $envVars) {
-#              write-output "The value for $($var.name) is $($var.value)"
-#            }
+      - name: Display results
+        shell: pwsh
+        run: |
+            Write-Output "We can now run terraform commands or other scripts using the configuration that is saved in"
+            Write-Output "the evironment variables."
+            Write-Output ""
+            Write-Output "For example:
+            Write-Output "terraform apply -var customer_short_name=$Env:VOD_customer_short_name"
