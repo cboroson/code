@@ -37,4 +37,6 @@ jobs:
             Write-Output "the evironment variables."
             Write-Output ""
             Write-Output "For example:"
-            Write-Output "terraform apply -var customer_short_name=$Env:VOD_customer_short_name"
+            Write-Output "terraform apply \"
+            Write-Output "  -var customer_short_name=$Env:VOD_customer_short_name \"
+            Write-Output "  -var DB_server_name=$Env:VOD_DB_server_name \"
