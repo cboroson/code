@@ -1,6 +1,10 @@
 # Reads json configuration file and creates environment variables for each entry
 
-$config = (get-content ~/Source/configuration/admins09.json | convertFrom-json)
+param (
+    [string]$configFile
+)
+
+$config = (get-content $configFile | convertFrom-json)
 foreach ($Line in $config.PSObject.Properties) {
 
   $EnvVarName = "VOD_$($Line.Name)"
