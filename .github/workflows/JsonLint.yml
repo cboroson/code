@@ -52,7 +52,7 @@ jobs:
               for f in $jsonFiles
               do
                 echo "Checking json syntax on $f"
-                jsonlint-php -v $f
+                jsonlint-php $f
               done
 
             fi
