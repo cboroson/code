@@ -50,7 +50,7 @@ jobs:
               $json = get-content $file -raw
               
               try {
-                test-json $json -erroraction stop
+                test-json $json -erroraction stop | out-null
                 write-host "$file is valid json"
               }
               catch {
