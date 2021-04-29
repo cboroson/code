@@ -34,16 +34,18 @@ jobs:
         shell: pwsh
         run: |
             # Check if changed-file list exists
-            if (test-path $HOME/files.txt) {
-              write-host "Changed file list found.  Processing...
-            }
-            else {
+            if (! (test-path $HOME/files.txt)) {
               write-host "Changed file not list found.  Exiting.
               Exit 0
             }
 
-            # Check each file for json syntax
-            foreach ($file in (get-content $HOME/files.txt)) {
+            write-host "Changed file list found.  Processing...
+
+            # only process json files
+            $jsonFiles = get-content $HOME/files.txt | where {$_ -match '.json$'}
+            
+            # Check each file for json syntax            
+            foreach ($file in $jsonFiles) {
               test-json $file
             }
             
