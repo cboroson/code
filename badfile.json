@@ -1,4 +1,5 @@
 {
   "name": "this is good",
-  "foo": this is not
+  "foo": this is not,
+  "bar": "this is good"
 }
