@@ -28,6 +28,9 @@ jobs:
       - name: file_changes
         uses: trilom/file-changes-action@v1.2.3
 
+      - name: Install jsonlint 
+        run: sudo apt install jsonlint
+
       - name: Run jsonlint against all files in the pull request
         run: |
           sudo apt install jsonlint
