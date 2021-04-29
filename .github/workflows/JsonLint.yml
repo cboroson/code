@@ -25,10 +25,16 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: file_changes
+        uses: trilom/file-changes-action@v1.2.3
+
       - name: jsonlint
         run: |
           sudo apt install jsonlint
-          jsonlint-php *
-          
+            for f in '${{ steps.file_changes.outputs.files }}'
+            do
+              jsonlint-php $f
+            done
+
 #      - name: json-lint
 #        uses: ocular-d/json-linter@0.0.1
