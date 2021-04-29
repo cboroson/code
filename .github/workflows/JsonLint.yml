@@ -49,10 +49,11 @@ jobs:
               Write-Host "Checking json syntax on $file..."
               $json = get-content $file -raw
               
-              if (test-json $json) {
+              try {
+                test-json $json -erroraction stop
                 write-host "$file is valid json"
               }
-              else {
+              catch {
                 write-error "$file is not valid json"
               }
             }
