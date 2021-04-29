@@ -45,10 +45,11 @@ jobs:
 
             # only process json files
             jsonFiles=$(cat $HOME/files.txt | grep -E '.json$')
+            echo $jsonFiles
             
             # Check each file for json syntax            
             for f in $jsonFiles
             do
-              echo "Checking json syntax on $f..."
+              echo "Checking json syntax on $f"
               jsonlint-php -v $f
             done
