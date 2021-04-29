@@ -28,7 +28,7 @@ jobs:
       - name: check if jsonlint exists
         run: |
           sudo apt install jsonlint
-          cat /usr/share/doc/jsonlint
+          ls -la /usr/share/doc/jsonlint
           /usr/bin/jsonlint-php -v *
         
 #      - name: json-lint
