@@ -24,6 +24,10 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-        
-      - name: json-lint
-        uses: ocular-d/json-linter@0.0.1
+
+      - name: jsonlint
+        run: |
+          fd -e json -x jsonlint
+          
+#      - name: json-lint
+#        uses: ocular-d/json-linter@0.0.1
