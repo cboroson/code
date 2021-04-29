@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: JsonLint
 
 # Controls when the action will run. 
 on:
@@ -27,7 +27,7 @@ jobs:
 
       - name: check if jsonlint exists
         run: |
-          npm install -g jsonlint
+          sudo apt install jsonlint
           which jsonlint
         
 #      - name: json-lint
