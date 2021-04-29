@@ -28,7 +28,7 @@ jobs:
       - name: check if jsonlint exists
         run: |
           sudo apt install jsonlint
-          sudo jsonlint *.json -v
+          find / jsonlint*
         
 #      - name: json-lint
 #        uses: ocular-d/json-linter@0.0.1
