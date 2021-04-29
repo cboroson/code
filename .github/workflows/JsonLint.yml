@@ -28,7 +28,7 @@ jobs:
       - name: file_changes
         uses: trilom/file-changes-action@v1.2.3
 
-      - name: jsonlint
+      - name: Run jsonlint against all files in the pull request
         run: |
           sudo apt install jsonlint
             for f in '${{ steps.file_changes.outputs.files }}'
@@ -37,6 +37,3 @@ jobs:
                 jsonlint-php $f
               fi
             done
-
-#      - name: json-lint
-#        uses: ocular-d/json-linter@0.0.1
