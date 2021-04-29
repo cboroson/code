@@ -45,7 +45,7 @@ jobs:
 
             # only process json files
             echo line 47
-            grep 'json' $HOME/files.txt
+            grep json $HOME/files.txt
             echo line 49
             jsonFiles=$(grep -E '.json$' $HOME/files.txt)
             echo line 51
