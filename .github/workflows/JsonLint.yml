@@ -27,7 +27,8 @@ jobs:
 
       - name: jsonlint
         run: |
-          fd -e json -x jsonlint
+          sudo apt install jsonlint
+          jsonlint-php *
           
 #      - name: json-lint
 #        uses: ocular-d/json-linter@0.0.1
