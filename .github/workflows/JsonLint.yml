@@ -44,13 +44,14 @@ jobs:
             echo "Changed file list found.  Processing..."
 
             # only process json files
-            cat $HOME/files.txt
             jsonFiles=$(cat $HOME/files.txt | grep -E '.json$')
-            echo $jsonFiles
+            if $jsonFiles; then
             
-            # Check each file for json syntax            
-            for f in $jsonFiles
-            do
-              echo "Checking json syntax on $f"
-              jsonlint-php -v $f
-            done
+              # Check each file for json syntax            
+              for f in $jsonFiles
+              do
+                echo "Checking json syntax on $f"
+                jsonlint-php -v $f
+              done
+
+            fi
