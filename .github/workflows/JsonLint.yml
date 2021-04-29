@@ -38,13 +38,12 @@ jobs:
           # check if file exists
           if if test -f "$HOME/files.txt"; then
             for f in $(cat $HOME/files.txt)
-            do
-              # Run jsonlint on each file
-              if [ -n "$f" ]; then
-                jsonlint-php $f
-              fi
-            done
-          
+              do
+                # Run jsonlint on each file
+                if [ -n "$f" ]; then
+                  jsonlint-php $f
+                fi
+              done          
           else
             echo "No file changes found."
           fi
