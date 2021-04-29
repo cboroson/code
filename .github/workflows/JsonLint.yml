@@ -26,7 +26,9 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: check if jsonlint exists
-        run: which jsonlint
+        run: |
+          npm install -g jsonlint
+          which jsonlint
         
-      - name: json-lint
-        uses: ocular-d/json-linter@0.0.1
+#      - name: json-lint
+#        uses: ocular-d/json-linter@0.0.1
