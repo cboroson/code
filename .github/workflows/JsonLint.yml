@@ -44,6 +44,7 @@ jobs:
             echo "Changed file list found.  Processing..."
 
             # only process json files
+            cat $HOME/files.txt
             jsonFiles=$(cat $HOME/files.txt | grep -E '.json$')
             echo $jsonFiles
             
