@@ -45,7 +45,7 @@ jobs:
 
             # only process json files
             echo line 47
-            jsonFiles=$(cat $HOME/files.txt | grep -E '.json$')
+            jsonFiles=$(cat $HOME/files.txt | grep '.json$')
             echo line 49
             if $jsonFiles; then
             echo line 51
