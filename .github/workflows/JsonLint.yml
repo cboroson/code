@@ -33,7 +33,9 @@ jobs:
           sudo apt install jsonlint
             for f in '${{ steps.file_changes.outputs.files }}'
             do
-              jsonlint-php $f
+              if [ -n "$f" ]; then
+                jsonlint-php $f
+              fi
             done
 
 #      - name: json-lint
