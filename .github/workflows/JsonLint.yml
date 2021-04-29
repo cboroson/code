@@ -46,6 +46,7 @@ jobs:
             
             # Check each file for json syntax            
             foreach ($file in $jsonFiles) {
+              Write-Host "Checking json syntax on $file..."
               test-json $file
             }
             
