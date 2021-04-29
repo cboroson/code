@@ -26,10 +26,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: check if jsonlint exists
-        run: |
-          sudo apt install jsonlint
-          ls -la /usr/share/doc/jsonlint
-          /usr/bin/jsonlint-php -v *
         
-#      - name: json-lint
-#        uses: ocular-d/json-linter@0.0.1
+      - name: json-lint
+        uses: ocular-d/json-linter@0.0.1
