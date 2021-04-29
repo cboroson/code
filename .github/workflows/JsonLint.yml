@@ -35,14 +35,14 @@ jobs:
         run: |
             # Check if changed-file list exists
             if (! (test-path $HOME/files.txt)) {
-              write-host "Changed file not list found.  Exiting.
+              write-host "Changed file not list found.  Exiting."
               Exit 0
             }
 
-            write-host "Changed file list found.  Processing...
+            write-host "Changed file list found.  Processing..."
 
             # only process json files
-            $jsonFiles = get-content $HOME/files.txt | where {$_ -match '.json$'}
+            $jsonFiles = get-content $HOME/files.txt | where-object {$_ -match '.json$'}
             
             # Check each file for json syntax            
             foreach ($file in $jsonFiles) {
