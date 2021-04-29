@@ -31,30 +31,21 @@ jobs:
           fileOutput: ' '
 
       - name: Run jsonlint against all files in the pull request
-        shell: pwsh
         run: |
             # Check if changed-file list exists
-            if (! (test-path $HOME/files.txt)) {
-              write-host "Changed file not list found.  Exiting."
+            if [ ! -f "$HOME/files.txt" ]; then
+              echo "Changed file not list found.  Exiting."
               Exit 0
             }
 
-            write-host "Changed file list found.  Processing..."
+            echo "Changed file list found.  Processing..."
 
             # only process json files
-            $jsonFiles = get-content $HOME/files.txt | where-object {$_ -match '.json$'}
+            jsonFiles=$(cat $HOME/files.txt | grep -E '.json$')
             
             # Check each file for json syntax            
-            foreach ($file in $jsonFiles) {
-              Write-Host "Checking json syntax on $file..."
-              $json = get-content $file -raw
-              
-              try {
-                test-json $json -erroraction stop | out-null
-                write-host "$file is valid json"
-              }
-              catch {
-                write-error "$file is not valid json"
-              }
-            }
-            
+            for f in $jsonFiles
+            do
+              echo "Checking json syntax on $f..."
+              jsonlint-php -v $f
+            done
