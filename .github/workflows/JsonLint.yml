@@ -47,6 +47,13 @@ jobs:
             # Check each file for json syntax            
             foreach ($file in $jsonFiles) {
               Write-Host "Checking json syntax on $file..."
-              test-json (get-content $file -raw)
+              $json = get-content $file -raw
+              
+              if (test-json $json) {
+                write-host "$file is valid json"
+              }
+              else {
+                write-error "$file is not valid json"
+              }
             }
             
