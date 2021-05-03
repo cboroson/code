@@ -62,6 +62,17 @@ jobs:
         run: terraform plan -no-color
         continue-on-error: true
 
+      - name: 'Terraform Output'
+        id: terraform
+        uses: hashicorp/terraform-github-actions@master
+        with:
+          tf_actions_version: 0.12.13
+          tf_actions_subcommand: 'output'
+          tf_actions_working_dir: '.'
+          
+      - name: 'Use Terraform Output'
+        run: echo ${{ steps.terraform.outputs.tf_actions_output  }}
+
       - name: Login
         uses: atlassian/gajira-login@master
         env:
@@ -71,11 +82,9 @@ jobs:
 
       - name: Comment on issue
         uses: atlassian/gajira-comment@master
-        env:
-          PLAN: "${{ steps.plan.outputs.stdout }}"
         with:
           issue: ${{ github.event.inputs.jira_issue }}
-          comment: ${{ env.PLAN }}
+          comment: ${{ steps.terraform.outputs.tf_actions_output  }}
 
       - name: Transition issue
         uses: atlassian/gajira-transition@master
