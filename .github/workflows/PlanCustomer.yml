@@ -56,9 +56,15 @@ jobs:
         id: init
         run: terraform init
 
+      - name: Prepare log file
+        run: |
+          echo > ./plan.log
+          echo >> ./plan.log
+          echo >> ./plan.log
+        
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color > ./plan.log
+        run: terraform plan -no-color >> ./plan.log
         continue-on-error: true
 
       - name: Login
@@ -67,9 +73,6 @@ jobs:
           JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
           JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-      
-      - name: output log file to screen
-        run: cat ./plan.log
 
       - name: attach plan output to Jira issue
         run: curl -D- -u ${{ secrets.JIRA_USER_EMAIL }}:${{ secrets.JIRA_API_TOKEN }} -X POST -H "X-Atlassian-Token:no-check" -F "file=@./plan.log" ${{ secrets.JIRA_BASE_URL }}/rest/api/3/issue/${{ github.event.inputs.jira_issue }}/attachments
