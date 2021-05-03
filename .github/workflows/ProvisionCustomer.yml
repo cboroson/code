@@ -58,7 +58,7 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        run: terraform plan -no-color
+        run: terraform plan -no-color > plan.log
         continue-on-error: true
 
       - name: Login
@@ -68,11 +68,8 @@ jobs:
           JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
 
-      - name: Comment on issue
-        uses: atlassian/gajira-comment@master
-        with:
-          issue: ${{ github.event.inputs.jira_issue }}
-          comment: ${{ steps.plan.outputs.stdout  }}
+      - name: attach plan output to Jira issue
+        run: curl -D- -u ${{ secrets.JIRA_USER_EMAIL }}:${{ secrets.JIRA_API_TOKEN }} -X POST -H "X-Atlassian-Token: nocheck" -F "file=plan.log" http://${{ secrets.JIRA_BASE_URL }}/rest/api/3/issue/${{ github.event.inputs.jira_issue }}/attachments
 
       - name: Transition issue
         uses: atlassian/gajira-transition@master
