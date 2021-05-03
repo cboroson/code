@@ -36,9 +36,10 @@ jobs:
         run: ./scripts/parseConfig.ps1 -configFile "./configuration/${{ github.event.inputs.customer_short_name }}.json"
          
       - name: Display results
+      - uses: Amadevus/pwsh-script@v2
         id: display_results
-        shell: pwsh
-        run: |
+        with:
+          script: |
             Write-Output "We can now run terraform commands or other scripts using the configuration that is saved in"
             Write-Output "the evironment variables."
             Write-Output ""
@@ -58,7 +59,7 @@ jobs:
         uses: atlassian/gajira-comment@master
         with:
           issue: ${{ github.event.inputs.jira_issue }}
-          comment: ${{ steps.parse_json.outputs.stdout }}
+          comment: ${{ steps.display_results.outputs.stdout }}
 
       - name: Transition issue
         uses: atlassian/gajira-transition@master
