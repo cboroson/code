@@ -55,9 +55,11 @@ jobs:
 
       - name: Comment on issue
         uses: atlassian/gajira-comment@master
+        env:
+          PLAN: "terraform\n${{ steps.display_results.outputs.stdout }}"
         with:
           issue: ${{ github.event.inputs.jira_issue }}
-          comment: ${{ steps.display_results.outputs.stdout }}
+          comment: ${process.env.PLAN}
 
       - name: Transition issue
         uses: atlassian/gajira-transition@master
