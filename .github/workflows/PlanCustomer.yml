@@ -48,7 +48,8 @@ jobs:
           echo > ./plan.log
           echo >> ./plan.log
           echo >> ./plan.log
-        
+          echo Terraform log:>> ./plan.log
+
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color >> ./plan.log
