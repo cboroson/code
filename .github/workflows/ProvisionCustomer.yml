@@ -1,4 +1,4 @@
-name: Parse Json File
+name: Provision Customer
 
 # Controls when the action will run. 
 on:
@@ -35,6 +35,7 @@ jobs:
         run: ./scripts/parseConfig.ps1 -configFile "./configuration/${{ github.event.inputs.customer_short_name }}.json"
          
       - name: Display results
+        id: display_results
         shell: pwsh
         run: |
             Write-Output "We can now run terraform commands or other scripts using the configuration that is saved in"
@@ -56,4 +57,10 @@ jobs:
         uses: atlassian/gajira-comment@master
         with:
           issue: ${{ github.event.inputs.jira_issue }}
-          comment: This comment was added by a GitHub action.
+          comment: ${{join(steps.display_results.outputs.*, '\n')}}
+
+      - name: Transition issue
+        uses: atlassian/gajira-transition@master
+        with:
+          issue: ${{ github.event.inputs.jira_issue }}
+          transition: "Review"
