@@ -48,6 +48,7 @@ jobs:
           echo > ./plan.log
           echo >> ./plan.log
           echo >> ./plan.log
+          echo >> ./plan.log
           echo Terraform log:>> ./plan.log
 
       - name: Terraform Plan
