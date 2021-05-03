@@ -59,7 +59,7 @@ jobs:
         uses: atlassian/gajira-comment@master
         with:
           issue: ${{ github.event.inputs.jira_issue }}
-          comment: ${{ steps.display_results.outputs.stdout }}
+          comment: ${{ steps.display_results.outputs.result }}
 
       - name: Transition issue
         uses: atlassian/gajira-transition@master
