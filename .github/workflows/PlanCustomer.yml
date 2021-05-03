@@ -16,7 +16,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   Build:
-    name: Read and parse configuration
+    name: Plan changes to customer ${{ github.event.inputs.customer_short_name }}
     runs-on: ubuntu-latest
     environment: testing
     steps:
