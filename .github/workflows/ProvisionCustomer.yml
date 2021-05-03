@@ -31,6 +31,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
  
       - name: Parse Json File
+        id: parse_json
         shell: pwsh
         run: ./scripts/parseConfig.ps1 -configFile "./configuration/${{ github.event.inputs.customer_short_name }}.json"
          
@@ -55,11 +56,9 @@ jobs:
 
       - name: Comment on issue
         uses: atlassian/gajira-comment@master
-        env:
-          PLAN: "terraform\n${{ steps.display_results.outputs.stdout }}"
         with:
           issue: ${{ github.event.inputs.jira_issue }}
-          comment: ${process.env.PLAN}
+          comment: ${{ steps.parse_json.outputs.stdout }}
 
       - name: Transition issue
         uses: atlassian/gajira-transition@master
