@@ -1,4 +1,4 @@
-name: Provision Customer
+name: Plan Customer
 
 # Controls when the action will run. 
 on:
@@ -30,24 +30,11 @@ jobs:
           path: 'configuration'
           token: ${{ secrets.GITHUB_TOKEN }}
  
-      - name: Parse Json File
-        id: parse_json
-        shell: pwsh
-        run: ./scripts/parseConfig.ps1 -configFile "./configuration/${{ github.event.inputs.customer_short_name }}.json"
+#      - name: Parse Json File
+#        id: parse_json
+#        shell: pwsh
+#        run: ./scripts/parseConfig.ps1 -configFile "./configuration/${{ github.event.inputs.customer_short_name }}.json"
          
-      - name: Display results
-        uses: Amadevus/pwsh-script@v2.0.1
-        id: display_results
-        with:
-          script: |
-            Write-Output "We can now run terraform commands or other scripts using the configuration that is saved in"
-            Write-Output "the evironment variables."
-            Write-Output ""
-            Write-Output "For example:"
-            Write-Output "terraform apply \"
-            Write-Output "  -var customer_short_name=$Env:VOD_customer_short_name \"
-            Write-Output "  -var DB_server_name=$Env:VOD_DB_server_name"
-
       - name: Terraform Format
         id: fmt
         run: terraform fmt -list=true -write=false -diff=true -check=true
