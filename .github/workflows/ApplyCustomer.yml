@@ -48,6 +48,7 @@ jobs:
           echo > ./apply.log
           echo >> ./apply.log
           echo >> ./apply.log
+          echo Terraform log:>> ./apply.log
         
       - name: Terraform Apply
         id: apply
