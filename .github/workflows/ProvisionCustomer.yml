@@ -62,17 +62,6 @@ jobs:
         run: terraform plan -no-color
         continue-on-error: true
 
-      - name: GitHub Script
-        uses: actions/github-script@v4.0.2
-        env:
-          PLAN: "terraform\n${{ steps.plan.outputs.stdout }}"
-        with:
-          script: |
-            const output = #### Terraform Format and Style ${{ steps.fmt.outcome }}
-            #### Terraform Initialization ${{ steps.init.outcome }}
-            #### Terraform Plan ${{ steps.plan.outcome }}
-            ${process.env.PLAN}
-
       - name: Login
         uses: atlassian/gajira-login@master
         env:
@@ -82,9 +71,11 @@ jobs:
 
       - name: Comment on issue
         uses: atlassian/gajira-comment@master
+        env:
+          PLAN: "${{ steps.plan.outputs.stdout }}"
         with:
           issue: ${{ github.event.inputs.jira_issue }}
-          comment: ${{ steps.display_results.outputs.result }}
+          comment: ${process.env.PLAN}
 
       - name: Transition issue
         uses: atlassian/gajira-transition@master
