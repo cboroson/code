@@ -1,0 +1,71 @@
+name: Apply Customer
+
+# Controls when the action will run. 
+on:
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    # Required inputs
+    inputs:
+      customer_short_name:
+        description: 'Customer short name'
+        required: true
+      jira_issue:
+        description: 'Jira issue that triggered this action'
+        required: false
+        
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  Build:
+    name: Apply changes to customer ${{ github.event.inputs.customer_short_name }}
+    runs-on: ubuntu-latest
+    environment: testing
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      # Checks-out a separate repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          repository: cboroson/configuration
+          path: 'configuration'
+          token: ${{ secrets.GITHUB_TOKEN }}
+ 
+#      - name: Parse Json File
+#        id: parse_json
+#        shell: pwsh
+#        run: ./scripts/parseConfig.ps1 -configFile "./configuration/${{ github.event.inputs.customer_short_name }}.json"
+         
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -list=true -write=false -diff=true -check=true
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+
+      - name: Prepare log file
+        run: |
+          echo > ./apply.log
+          echo >> ./apply.log
+          echo >> ./apply.log
+        
+      - name: Terraform Apply
+        id: apply
+        run: terraform apply -auto-approve -no-color >> ./apply.log
+        continue-on-error: true
+
+      - name: Login
+        uses: atlassian/gajira-login@master
+        env:
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+
+      - name: attach apply output to Jira issue
+        run: curl -D- -u ${{ secrets.JIRA_USER_EMAIL }}:${{ secrets.JIRA_API_TOKEN }} -X POST -H "X-Atlassian-Token:no-check" -F "file=@./apply.log" ${{ secrets.JIRA_BASE_URL }}/rest/api/3/issue/${{ github.event.inputs.jira_issue }}/attachments
+
+      - name: Transition issue
+        uses: atlassian/gajira-transition@master
+        with:
+          issue: ${{ github.event.inputs.jira_issue }}
+          transition: "Validate"
