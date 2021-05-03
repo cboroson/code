@@ -36,7 +36,7 @@ jobs:
         run: ./scripts/parseConfig.ps1 -configFile "./configuration/${{ github.event.inputs.customer_short_name }}.json"
          
       - name: Display results
-      - uses: Amadevus/pwsh-script@v2
+        uses: Amadevus/pwsh-script@v2.0.1
         id: display_results
         with:
           script: |
