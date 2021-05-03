@@ -75,7 +75,7 @@ jobs:
           PLAN: "${{ steps.plan.outputs.stdout }}"
         with:
           issue: ${{ github.event.inputs.jira_issue }}
-          comment: ${process.env.PLAN}
+          comment: ${{ env.PLAN }}
 
       - name: Transition issue
         uses: atlassian/gajira-transition@master
