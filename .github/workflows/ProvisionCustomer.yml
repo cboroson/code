@@ -58,20 +58,8 @@ jobs:
 
       - name: Terraform Plan
         id: plan
-        if: github.event_name == 'pull_request'
         run: terraform plan -no-color
         continue-on-error: true
-
-      - name: 'Terraform Output'
-        id: terraform
-        uses: hashicorp/terraform-github-actions@master
-        with:
-          tf_actions_version: 0.12.13
-          tf_actions_subcommand: 'output'
-          tf_actions_working_dir: '.'
-          
-      - name: 'Use Terraform Output'
-        run: echo ${{ steps.terraform.outputs.tf_actions_output  }}
 
       - name: Login
         uses: atlassian/gajira-login@master
@@ -84,7 +72,7 @@ jobs:
         uses: atlassian/gajira-comment@master
         with:
           issue: ${{ github.event.inputs.jira_issue }}
-          comment: ${{ steps.terraform.outputs.tf_actions_output  }}
+          comment: ${{ steps.plan.outputs.stdout  }}
 
       - name: Transition issue
         uses: atlassian/gajira-transition@master
